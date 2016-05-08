@@ -16,7 +16,7 @@
 
     <context:component-scan base-package="com.yan.wang.financialdata" />
 
-    <bean id="report" class="com.yan.wang.financialdata.dao.Report" scope="prototype" />
+    <bean id="report" class="com.yan.wang.financialdata.model.Report" scope="prototype" />
 
     <!-- stored job-metadata in database -->
     <!--<bean id="jobRepository"-->
@@ -38,17 +38,29 @@
     </bean>
 
     <batch:job id="reportJob">
+        <!--<batch:step id="step1">-->
+            <!--<batch:tasklet>-->
+                <!--<batch:chunk reader="cvsFileItemReader" writer="mysqlItemWriter" commit-interval="2">-->
+                <!--</batch:chunk>-->
+            <!--</batch:tasklet>-->
+        <!--</batch:step>-->
         <batch:step id="step1">
             <batch:tasklet>
-                <batch:chunk reader="cvsFileItemReader" writer="mysqlItemWriter"
-                             commit-interval="2">
+                <batch:chunk reader="StockItemReader" writer="StockItemWriter" commit-interval="2">
                 </batch:chunk>
             </batch:tasklet>
         </batch:step>
     </batch:job>
 
-    <bean id="cvsFileItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
+    <bean id="StockItemReader" class="com.yan.wang.financialdata.itemreader.StockItemReader">
 
+    </bean>
+
+    <bean id="StockItemWriter" class="com.yan.wang.financialdata.itemwriter.StockItemWriter">
+
+    </bean>
+
+    <bean id="cvsFileItemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
         <!-- Read a csv file -->
         <property name="resource" value="classpath:cvs/report.csv" />
 
@@ -84,9 +96,8 @@
         <property name="sql">
             <value>
                 <![CDATA[
-            	insert into REPORT(DATE,IMPRESSIONS,CLICKS,EARNING)
-			values (:date, :impressions, :clicks, :earning)
-            ]]>
+            	    insert into REPORT(DATE,IMPRESSIONS,CLICKS,EARNING) values (:date, :impressions, :clicks, :earning)
+                ]]>
             </value>
         </property>
         <!-- It will take care matching between object property and sql name parameter -->

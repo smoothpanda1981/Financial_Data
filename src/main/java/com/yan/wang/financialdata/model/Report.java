@@ -1,4 +1,4 @@
-package com.yan.wang.financialdata.dao;
+package com.yan.wang.financialdata.model;
 
 import javax.persistence.*;
 

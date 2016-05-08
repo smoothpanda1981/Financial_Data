@@ -17,6 +17,7 @@
         <commons-pool2.version>2.4.2</commons-pool2.version>
         <hibernate-core.version>4.3.11.Final</hibernate-core.version>
         <hibernate-entitymanage.version>4.3.11.Final</hibernate-entitymanage.version>
+        <YahooFinanceAPI.version>3.1.0</YahooFinanceAPI.version>
     </properties>
 
 
@@ -72,6 +73,12 @@
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yahoofinance-api</groupId>
+            <artifactId>YahooFinanceAPI</artifactId>
+            <version>${YahooFinanceAPI.version}</version>
         </dependency>
     </dependencies>
 
